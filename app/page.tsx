@@ -1,7 +1,21 @@
-import AcmeLogo from '@/app/ui/acme-logo';
+import AcmeLogo from "@/app/ui/acme-logo";
+import Link from "next/link";
+import clsx from "clsx";
 
-import Link from 'next/link';
 export default function Page() {
+  // let status = "paid";
+  // const resultClassName = clsx({
+  //   "bg-gray-100 text-gray-500": status === "pending",
+  //   "bg-green-500 text-white": status === "paid",
+  // });
+  // return (
+  //   <div
+  //     className={`inline-flex items-center rounded-full m-8 px-2 py-1 text-xl ${resultClassName}`}
+  //   >
+  //     clsx 사용해보기
+  //   </div>
+  // );
+
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
@@ -10,7 +24,7 @@ export default function Page() {
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
         <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
           <p className={`text-xl text-gray-800 md:text-3xl md:leading-normal`}>
-            <strong>Welcome to Acme.</strong> This is the example for the{' '}
+            <strong>Welcome to Acme.</strong> This is the example for the{" "}
             <a href="https://nextjs.org/learn/" className="text-blue-500">
               Next.js Learn Course
             </a>
