@@ -1,21 +1,9 @@
 import AcmeLogo from "@/app/ui/acme-logo";
 import Link from "next/link";
 import clsx from "clsx";
+import Image from "next/image";
 
 export default function Page() {
-  // let status = "paid";
-  // const resultClassName = clsx({
-  //   "bg-gray-100 text-gray-500": status === "pending",
-  //   "bg-green-500 text-white": status === "paid",
-  // });
-  // return (
-  //   <div
-  //     className={`inline-flex items-center rounded-full m-8 px-2 py-1 text-xl ${resultClassName}`}
-  //   >
-  //     clsx 사용해보기
-  //   </div>
-  // );
-
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
@@ -39,6 +27,20 @@ export default function Page() {
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
           {/* Add Hero Images Here */}
+          <Image
+            src="/hero-desktop.png"
+            width={1000}
+            height={760}
+            className="hidden md:block"
+            alt="Screenshots of the dashboard project showing desktop and mobile versions"
+          />
+          <Image
+            src="/hero-mobile.png"
+            width={560}
+            height={620}
+            className="block md:hidden"
+            alt="Screenshot of the dashboard project showing mobile version"
+          />
         </div>
       </div>
     </main>
