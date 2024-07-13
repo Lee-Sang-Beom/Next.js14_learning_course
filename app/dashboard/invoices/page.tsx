@@ -6,6 +6,9 @@ import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import { lusitana } from "../../ui/font";
 
+// import
+import { fetchInvoicesPages } from "@/app/lib/data";
+
 export default async function Page({
   searchParams,
 }: {
@@ -14,9 +17,11 @@ export default async function Page({
     page?: string;
   };
 }) {
-  console.log("searchParams", searchParams);
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
+
+  // 추가
+  const totalPages = await fetchInvoicesPages(query);
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -30,7 +35,8 @@ export default async function Page({
         <Table query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
-        {/* <Pagination totalPages={totalPages} /> */}
+        {/* 주석해제 */}
+        <Pagination totalPages={totalPages} />
       </div>
     </div>
   );
