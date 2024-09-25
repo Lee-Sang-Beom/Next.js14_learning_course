@@ -25,16 +25,10 @@ export async function createInvoice(formData: FormData) {
   const amountInCents = amount * 100;
   const date = new Date().toISOString().split("T")[0];
 
-  try {
-    await sql`
+  await sql`
     INSERT INTO invoices (customer_id, amount, status, date)
     VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
   `;
-  } catch (e) {
-    return {
-      message: "DB Error : Faileed to Create Invoice",
-    };
-  }
 
   revalidatePath("/dashboard/invoices");
   redirect("/dashboard/invoices"); // add code
@@ -51,17 +45,11 @@ export async function updateInvoice(id: string, formData: FormData) {
 
   const amountInCents = amount * 100;
 
-  try {
-    await sql`
+  await sql`
     UPDATE invoices
     SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
     WHERE id = ${id}
   `;
-  } catch (e) {
-    return {
-      message: "DB Error : Faileed to Update Invoice",
-    };
-  }
 
   // 클라이언트 캐시 무효화 및 서버 요청 갱신
   revalidatePath("/dashboard/invoices");
@@ -70,11 +58,6 @@ export async function updateInvoice(id: string, formData: FormData) {
 }
 
 export async function deleteInvoice(id: string) {
-  try {
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath("/dashboard/invoices");
-    return { message: "Deleted Invoice." };
-  } catch (error) {
-    return { message: "Database Error: Failed to Delete Invoice." };
-  }
+  await sql`DELETE FROM invoices WHERE id = ${id}`;
+  revalidatePath("/dashboard/invoices");
 }
