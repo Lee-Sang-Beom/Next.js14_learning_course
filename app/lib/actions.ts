@@ -61,6 +61,9 @@ export async function createInvoice(prevState: State, formData: FormData) {
       VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
   } catch (error) {
+    // build 시 err발생 (Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars)
+    console.error(error);
+
     // 데이터베이스 오류 발생 시, 특정 오류 메시지를 반환합니다.
     return {
       message: "Database Error: Failed to Create Invoice.",
@@ -100,9 +103,11 @@ export async function updateInvoice(
     SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
     WHERE id = ${id}
   `;
-  } catch (e) {
+  } catch (error) {
+    // build 시 err발생 (Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars)
+    console.error(error);
     return {
-      message: "DB Error : Faileed to Update Invoice" + e,
+      message: "DB Error : Faileed to Update Invoice" + error,
     };
   }
 
@@ -118,6 +123,8 @@ export async function deleteInvoice(id: string) {
     revalidatePath("/dashboard/invoices");
     return { message: "Deleted Invoice." };
   } catch (error) {
+    // build 시 err발생 (Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars)
+    console.error(error);
     return { message: "Database Error: Failed to Delete Invoice." + error };
   }
 }
