@@ -1,6 +1,7 @@
 "use server";
 
 import { sql } from "@vercel/postgres";
+import { signIn } from "next-auth/react";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -126,5 +127,39 @@ export async function deleteInvoice(id: string) {
     // build 시 err발생 (Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars)
     console.error(error);
     return { message: "Database Error: Failed to Delete Invoice." + error };
+  }
+}
+
+export async function authenticate(
+  prevState: string | undefined, // 이전 상태
+  formData: FormData // 로그인 폼 데이터
+) {
+  try {
+    // Create an object with the necessary credentials
+    const credentials = {
+      email: formData.get("email")?.toString(),
+      password: formData.get("password")?.toString(),
+    };
+
+    // Call signIn with 'credentials' provider and the extracted form data
+    const response = await signIn("credentials", {
+      redirect: false, // To prevent redirection after sign-in
+      ...credentials, // Spread credentials into the options
+    });
+
+    // Check for authentication failure
+    if (response?.error) {
+      switch (response.error) {
+        case "CredentialsSignin": // 자격 증명이 잘못된 경우
+          return "Invalid credentials."; // 잘못된 자격 증명 메시지 반환
+        default:
+          return "Something went wrong."; // 기타 오류
+      }
+    }
+
+    return "Success"; // 로그인 성공 메시지 반환 (필요에 따라 변경)
+  } catch (error) {
+    console.error("Authentication failed", error);
+    return "Something went wrong."; // 예외 발생 시 메시지 반환
   }
 }
