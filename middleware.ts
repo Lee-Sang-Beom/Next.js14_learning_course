@@ -44,6 +44,7 @@ export default withAuth(
             return true;
           }
         } else {
+          console.log("이거탐??");
           return true;
         }
       },
@@ -54,5 +55,5 @@ export default withAuth(
 export const config = {
   // 이 미들웨어가 적용될 경로를 정의
   // 대시보드 관련 경로(`/dashboard/*`)뿐만 아니라 전체 경로(`/`)에도 조건을 적용
-  matcher: ["/dashboard/:path*", "/:path*"], // Protect dashboard and other paths
+  matcher: ["/dashboard/:path*"], // Protect dashboard and other paths
 };
