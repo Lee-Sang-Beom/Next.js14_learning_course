@@ -44,6 +44,7 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET, // 이 부분이 중요!
   callbacks: {
     async session({ session, token }) {
       session.user = token.user;
