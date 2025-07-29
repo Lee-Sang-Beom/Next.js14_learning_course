@@ -118,15 +118,14 @@ export async function updateInvoice(
   redirect("/dashboard/invoices");
 }
 
-export async function deleteInvoice(id: string) {
+export async function deleteInvoice(id: string): Promise<void> {
   try {
     await sql`DELETE FROM invoices WHERE id = ${id}`;
     revalidatePath("/dashboard/invoices");
-    return { message: "Deleted Invoice." };
+    // return 문 제거
   } catch (error) {
-    // build 시 err발생 (Error: 'error' is defined but never used.  @typescript-eslint/no-unused-vars)
-    console.error(error);
-    return { message: "Database Error: Failed to Delete Invoice." + error };
+    console.error("Database Error: Failed to Delete Invoice.", error);
+    throw new Error("Failed to delete invoice"); // return 대신 throw
   }
 }
 
